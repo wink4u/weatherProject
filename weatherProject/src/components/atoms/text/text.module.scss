@@ -1,0 +1,46 @@
+@use '../../../styles/base/variable' as var;
+@use '../../../styles/mixins/flex' as f; // 필요시 확장 가능
+
+.text {
+  // 📐 Variants (사이즈 및 두께 매핑)
+  &.variant-hero-title {
+    font-size: var.$h1;      // 2.4rem (필요시 컴포넌트단 가중치나 추가 class 처리)
+    font-weight: var.$fw-700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  
+  &.variant-section-title {
+    font-size: var.$h3;      // 1.6rem
+    font-weight: var.$fw-700;
+  }
+  
+  &.variant-card-value {
+    font-size: var.$h2;      // 2.0rem
+    font-weight: var.$fw-700;
+  }
+  
+  &.variant-body {
+    font-size: var.$p2;      // 1.3rem
+    font-weight: var.$fw-400;
+    line-height: 1.6;
+  }
+  
+  &.variant-caption {
+    font-size: var.$p4;      // 1.0rem
+    font-weight: var.$fw-500;
+  }
+  
+  &.variant-label {
+    font-size: var.$p4;      // 1.0rem
+    font-weight: var.$fw-400;
+  }
+
+  // 🎨 Colors (변수 파일 하단에 선언하신 컬러 매핑)
+  &.color-white { color: var.$white; }
+  &.color-gray-light { color: var.$color-gray-light; }
+  &.color-gray-dark { color: var.$color-gray-dark; }
+  &.color-mint { color: var.$color-mint; }
+  &.color-purple { color: var.$color-purple; }
+  &.color-blue-accent { color: var.$color-blue-accent; }
+}

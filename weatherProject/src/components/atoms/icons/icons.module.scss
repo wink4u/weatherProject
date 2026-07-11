@@ -1,0 +1,28 @@
+@use '../../../styles/base/variable' as var;
+@use '../../../styles/mixins/flex' as f;
+
+.icon-wrapper {
+  @include f.flex; // 만약 flex 믹스인이 정렬용이라면 사용, 아니라면 display: inline-flex;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  // 📐 크기 규칙 (대시보드 시각 기준)
+  &.size-sm {
+    font-size: var.$p2; // 약 1.3rem (타이틀 옆 이나 작은 레이블용)
+  }
+  &.size-md {
+    font-size: var.$h3; // 약 1.6rem (기본 버튼 내부 등)
+  }
+  &.size-lg {
+    font-size: var.$h1; // 약 2.4rem (우측 2x2 그리드 내 커다란 날씨 아이콘용)
+  }
+
+  // 🎨 색상 규칙 (Text 시스템과 동일하게 매핑)
+  &.color-white { color: var.$white; }
+  &.color-gray-light { color: var.$color-gray-light; }
+  &.color-gray-dark { color: var.$color-gray-dark; }
+  &.color-mint { color: var.$color-mint; }
+  &.color-purple { color: var.$color-purple; }
+  &.color-blue-accent { color: var.$color-blue-accent; }
+}

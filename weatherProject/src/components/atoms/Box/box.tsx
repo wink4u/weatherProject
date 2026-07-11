@@ -1,37 +1,33 @@
-import type { HTMLAttributes, ReactNode } from "react";
+import React from 'react';
+import styles from './box.module.scss'; // 파일명 컨벤션에 맞춰 소문자/대문자 확인 필요
 
-type BoxVariant = "default" | "selected" | "dark";
+export type BoxVariant = 'default' | 'gradient' | 'outline';
 
-type BoxProps = {
-  children: ReactNode;
+interface BoxProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
   variant?: BoxVariant;
+  clickable?: boolean;
   className?: string;
-} & HTMLAttributes<HTMLDivElement>;
+}
 
-const variantStyles: Record<BoxVariant, string> = {
-  default:
-    "border-white/15 bg-white/10 text-white shadow-[0_8px_30px_rgba(0,0,0,0.18)]",
-  selected:
-    "border-cyan-300/70 bg-cyan-400/20 text-white shadow-[0_0_24px_rgba(103,232,249,0.2)]",
-  dark:
-    "border-white/10 bg-slate-950/30 text-white shadow-[0_8px_30px_rgba(0,0,0,0.25)]",
-};
-
-export function Box({
+export default function Box({
   children,
-  variant = "default",
-  className = "",
+  variant = 'default',
+  clickable = false,
+  className = '',
   ...props
 }: BoxProps) {
+  
+  // SCSS 모듈 클래스 결합
+  const combinedClasses = [
+    styles.box,
+    styles[`variant-${variant}`],
+    clickable ? styles.clickable : '',
+    className
+  ].join(' ').trim();
+
   return (
-    <div
-      className={[
-        "rounded-2xl border p-5 backdrop-blur-md transition",
-        variantStyles[variant],
-        className,
-      ].join(" ")}
-      {...props}
-    >
+    <div className={combinedClasses} {...props}>
       {children}
     </div>
   );

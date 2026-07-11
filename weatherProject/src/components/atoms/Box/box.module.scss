@@ -1,0 +1,39 @@
+@use '../../../styles/base/variable' as var;
+
+.box {
+  border-radius: 1.6rem; // 대시보드의 둥근 모서리감 재현
+  padding: 2.4rem;       // 기본 안쪽 여백
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  overflow: hidden;
+  position: relative;
+
+  // 🎨 1. 테마/배경 Variant 규칙
+  &.variant-default {
+    // 가장 많이 쓰이는 우측 카드 형태 (반투명 네이비 블러)
+    background-color: rgba(35, 41, 67, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+  }
+
+  &.variant-gradient {
+    // 좌측 상단 메인 히어로 카드나 특별한 강조 영역용 미세 그라데이션
+    background: linear-gradient(135deg, rgba(35, 41, 67, 0.6) 0%, rgba(20, 24, 41, 0.8) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+  }
+
+  &.variant-outline {
+    // 맨 하단 가로형 Info Row 카드들처럼 완전 투명하고 선만 있는 스타일
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  // ⚡ 2. 대시보드 특유의 인터랙션 (선택 사항: 클릭 가능한 박스일 때)
+  &.clickable {
+    cursor: pointer;
+    &:hover {
+      border-color: var.$color-mint; // 마우스 오버 시 민트 포인트 컬러로 보더 강조
+      background-color: rgba(35, 41, 67, 0.6);
+    }
+  }
+}

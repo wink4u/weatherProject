@@ -13,6 +13,17 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  server: {
+    proxy: {
+      // 💡 브라우저에서 /api/weather로 시작하는 요청을 감지하면 아래 기상청 주소로 우회시킵니다.
+      '/api/weather': {
+        target: 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/weather/, ''), // URL에서 '/api/weather' 부분을 지우고 target 뒤에 붙입니다.
+        secure: false,
+      },
+    },
+  },
   test: {
     projects: [{
       extends: true,

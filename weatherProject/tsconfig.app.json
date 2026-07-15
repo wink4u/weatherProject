@@ -21,5 +21,8 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": [
+    "src/**/*", 
+    "src/vite-env.d.ts"  // 💡 명시적으로 include 배열에 추가해 줍니다!
+, "tests/weatherDashboard.spec.ts"  ]
 }

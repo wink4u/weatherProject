@@ -1,0 +1,27 @@
+@use '../../../styles/base/variable' as var;
+
+.present-locate-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  margin-bottom: 2rem;
+
+  .locate-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .locate-title {
+    font-size: 2.4rem;
+    font-weight: var.$fw-600;
+    margin-top: 0.4rem;
+  }
+  .gps-button {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.8rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    &:hover { background: rgba(255, 255, 255, 0.12); }
+  }
+}

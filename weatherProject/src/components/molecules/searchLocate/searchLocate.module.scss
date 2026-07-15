@@ -1,0 +1,27 @@
+@use '../../../styles/base/variable' as var;
+// 1. SearchLocate 스타일
+.search-box {
+  padding: 1.2rem 2.4rem;
+  margin-bottom: 1.6rem;
+  
+  .search-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+  }
+  .search-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var.$white;
+    font-size: var.$p2;
+    outline: none;
+    &::placeholder { color: var.$color-gray-dark; }
+  }
+  .search-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,29 @@
+@use '../../../styles/base/variable' as var;
+
+.present-weather-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.6rem;
+
+  .metric-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    padding: 2rem;
+  }
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .metric-value {
+    font-size: 2.2rem;
+    font-weight: var.$fw-600;
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(78, 242, 190, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(78, 242, 190, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(78, 242, 190, 0); }
+}

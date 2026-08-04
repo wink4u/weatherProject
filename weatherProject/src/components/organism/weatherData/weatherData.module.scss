@@ -1,39 +1,33 @@
-// src/components/organisms/WeatherDashboard/weatherDashboard.module.scss
 @use '../../../styles/base/variable' as var;
 
-// 🎨 글로벌 다크 배경 (시안의 깊고 어두운 인디고 네이비 컬러 반영)
-:global(body) {
-  background-color: #0d0e16;
-  margin: 0;
-  font-family: 'Pretendard', -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-// 📦 전체 대시보드 메인 레이아웃 (좌우 1.25 : 1 가로 비율 정밀 제어)
 .dashboard-container {
   display: flex;
   width: 100%;
-  max-width: 128rem; 
-  margin: 4rem auto;
+  max-width: 136rem;
+  margin: 0 auto 2.4rem auto;
   gap: 2.4rem;
   padding: 0 2.4rem;
   box-sizing: border-box;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
 }
 
-// ⬅️ LEFT CONTENT AREA (날씨 메인 안내 대형 카드)
 .left-content-card {
   flex: 1.25;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 72rem; // 수직 공간을 시안처럼 시원하게 확보
-  background: linear-gradient(135deg, rgba(30, 34, 54, 0.7) 0%, rgba(20, 22, 37, 0.8) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 3.2rem;
+  min-height: 64rem;
+  background: linear-gradient(135deg, rgba(22, 27, 46, 0.8) 0%, rgba(14, 17, 30, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2.8rem;
   padding: 4.8rem;
   position: relative;
   overflow: hidden;
   box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
 
   .title-group {
     display: flex;
@@ -41,65 +35,85 @@
     align-items: flex-start;
     z-index: 2;
 
-    // 상단 라운드 배지 스타일
+    .badge-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 3.6rem;
+      flex-wrap: wrap;
+    }
+
     .info-badge {
       display: inline-flex;
       align-items: center;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 0.6rem 1.6rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.8rem 1.6rem;
       border-radius: 10rem;
       color: #94a3b8;
       font-size: 1.3rem;
       font-weight: 500;
-      letter-spacing: -0.03rem;
-      margin-bottom: 3.6rem;
+      letter-spacing: -0.02rem;
     }
 
-    // 메인 타이틀 (시안 특유의 자간과 굵은 서체 재현)
-    .main-title {
-      color: #ffffff;
-      font-size: 5.2rem; // 글씨 크기를 시원하게 키움
-      font-weight: 800;
-      line-height: 1.35;
-      margin: 0 0 2.8rem 0;
-      letter-spacing: -0.15rem;
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(52, 211, 153, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      padding: 0.8rem 1.6rem;
+      border-radius: 10rem;
+      color: #34d399;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.05rem;
 
-      // '화려한 시각화로' 그라데이션 포인트 (민트 투 하늘)
-      .gradient-highlight {
-        background: linear-gradient(90deg, #67e8f9 0%, #34d399 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: inline-block;
+      .live-dot {
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 50%;
+        background-color: #34d399;
+        box-shadow: 0 0 1rem #34d399;
       }
     }
 
-    // 서브 설명 텍스트 (자연스러운 투명도 처리로 가독성 확보)
+    .main-title {
+      color: #ffffff;
+      font-size: 5.2rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin: 0 0 2.4rem 0;
+      letter-spacing: -0.15rem;
+
+      .white-highlight {
+        color: #ffffff;
+      }
+    }
+
     .sub-text {
       color: rgba(255, 255, 255, 0.55);
       font-size: 1.6rem;
       line-height: 1.65;
       max-width: 52rem;
       margin: 0;
-      letter-spacing: -0.05rem;
+      letter-spacing: -0.03rem;
     }
   }
 
-  // 하단 관심지역 가로 리스트 랩핑
   .other-cards-wrapper {
     width: 100%;
     z-index: 2;
-    margin-top: auto;
+    margin-top: 4rem;
   }
 
-  // 🎯 우측 하단 레이더 서클 그래픽 완전 복원 (색상 및 불투명도 보정)
   .bg-radar-deco {
     position: absolute;
-    bottom: -8rem;
-    right: -8rem;
-    width: 36rem;
-    height: 36rem;
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    bottom: -6rem;
+    right: -6rem;
+    width: 34rem;
+    height: 34rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -109,9 +123,9 @@
     &::before {
       content: '';
       position: absolute;
-      width: 24rem;
-      height: 24rem;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      width: 22rem;
+      height: 22rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
       border-radius: 50%;
     }
 
@@ -120,23 +134,29 @@
       position: absolute;
       width: 12rem;
       height: 12rem;
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.04);
       border-radius: 50%;
     }
-    
-    // 레이더 중앙 녹색 아이콘/도트 포인트
+
     .radar-center-dot {
-      width: 4.8rem;
-      height: 4.8rem;
-      border: 2px solid rgba(52, 211, 153, 0.2);
+      width: 5.6rem;
+      height: 5.6rem;
+      border: 1.5px solid rgba(103, 232, 249, 0.4);
       border-radius: 50%;
-      background: rgba(52, 211, 153, 0.05);
-      box-shadow: 0 0 2rem rgba(52, 211, 153, 0.1);
+      background: rgba(103, 232, 249, 0.08);
+      box-shadow: 0 0 2.5rem rgba(103, 232, 249, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .radar-icon {
+        font-size: 2.8rem;
+        color: #67e8f9;
+      }
     }
   }
 }
 
-// ➡️ RIGHT CONTENT COLUMN (우측 지도 및 메트릭스 섹션)
 .right-content-column {
   flex: 1;
   display: flex;
@@ -145,13 +165,5 @@
 
   .row-item {
     width: 100%;
-    
-    // 우측 영역에 들어오는 카드들도 일관된 다크 글래스모피즘 룩 부여
-    & > div {
-      background: linear-gradient(135deg, rgba(30, 34, 54, 0.6) 0%, rgba(20, 22, 37, 0.7) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 2.4rem;
-      box-shadow: 0 1.5rem 3.5rem rgba(0, 0, 0, 0.3);
-    }
   }
 }

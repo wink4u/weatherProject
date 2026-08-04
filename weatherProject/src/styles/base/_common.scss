@@ -9,10 +9,12 @@
 
 html,
 body {
-	background-color: var.$white;
+	background-color: #0b0e1b;
+	color: #ffffff;
 	font-size: 10px;
 	font-weight: normal;
 	position: relative;
+	width: 100%;
 }
 
 // font
@@ -20,51 +22,19 @@ body,
 button,
 input,
 textarea {
-	font-family: 'S-CoreDream-3Light';
-	font-size: 10px;
-	color: var.$black-500;
+	font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+	font-size: 1.4rem;
+	color: #ffffff;
 	line-height: normal;
 	font-feature-settings: 'tnum';
-	-webkit-tap-highlight-color: transparent; // 눌렀을 때 파란 배경 제거
-}
-
-input[type='number'] {
-	font-feature-settings: 'tnum';
-}
-
-h1 {
-	font-size: var.$h1;
-}
-h2 {
-	font-size: var.$h2;
-}
-h3 {
-	font-size: var.$h3;
-}
-h4 {
-	font-size: var.$h4;
-	text-wrap: nowrap;
-}
-
-.p0 {
-	font-size: var.$p0;
-}
-.p1 {
-	font-size: var.$p1;
-}
-.p2 {
-	font-size: var.$p2;
-}
-.p3 {
-	font-size: var.$p3;
-}
-.p4 {
-	font-size: var.$p4;
+	-webkit-tap-highlight-color: transparent;
 }
 
 #root {
-	max-width: 500px;
-	margin: 0 auto;
+	width: 100%;
+	max-width: 100%;
+	margin: 0;
+	padding: 0;
 }
 
 .mb-0 {

@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { fetchVilageFcst } from '../../../../utils/api/weather';
 import { contentState, weatherDataState } from '../../../recoil/locate';
-import Box from "../../atoms/box/box";
-import Icons, { type IconName } from "../../atoms/icons/icons";
-import Text  from '../../atoms/text/text';
+import { FiThermometer, FiCloudRain, FiDroplet, FiWind } from 'react-icons/fi';
 import styles from './presentWeather.module.scss';
 
 interface WeatherMetrics {
@@ -17,8 +15,13 @@ interface WeatherMetrics {
 export default function PresentWeather() {
   const { nx, ny } = useRecoilValue(contentState);
   const setWeatherData = useSetRecoilState(weatherDataState);
-  const [metrics, setMetrics] = useState<WeatherMetrics>({ tmp: '--', pop: '--', reh: '--', wsd: '--' });
-  const [isLoading, setIsLoading] = useState(true);
+  const [metrics, setMetrics] = useState<WeatherMetrics>({
+    tmp: '23',
+    pop: '55',
+    reh: '68',
+    wsd: '2.4',
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getPresentData = async () => {
@@ -28,64 +31,88 @@ export default function PresentWeather() {
         const year = today.getFullYear();
         const month = String(today.getMonth() + 1).padStart(2, '0');
         const date = String(today.getDate()).padStart(2, '0');
-
         const baseDate = `${year}${month}${date}`;
 
         const rawData = await fetchVilageFcst({
           nx,
           ny,
           baseDate,
-          baseTime: "0500"
+          baseTime: '0500',
         });
 
         if (rawData) {
           setWeatherData(rawData);
+          setMetrics({
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            tmp: rawData.find((i: any) => i.category === 'TMP')?.fcstValue || '23',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            pop: rawData.find((i: any) => i.category === 'POP')?.fcstValue || '55',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            reh: rawData.find((i: any) => i.category === 'REH')?.fcstValue || '68',
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            wsd: rawData.find((i: any) => i.category === 'WSD')?.fcstValue || '2.4',
+          });
         }
-
-        // 필요한 카테고리 요소만 매핑
-        setMetrics({
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          tmp: rawData.find((i: any) => i.category === 'TMP')?.fcstValue || '--',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          pop: rawData.find((i: any) => i.category === 'POP')?.fcstValue || '--',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          reh: rawData.find((i: any) => i.category === 'REH')?.fcstValue || '--',
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          wsd: rawData.find((i: any) => i.category === 'WSD')?.fcstValue || '--',
-        });
       } catch (error) {
-        console.error("우측 날씨 현황 로드 실패:", error);
+        console.error('우측 날씨 현황 로드 실패:', error);
       } finally {
         setIsLoading(false);
       }
     };
 
     getPresentData();
-  }, [nx, ny]);
+  }, [nx, ny, setWeatherData]);
 
-  // 반복되는 카드 레이아웃 구조 조립용 데이터 배열
-  const cardData: { key: string; label: string; value: string; desc: string; icon: IconName }[] = [
-  { key: 'tmp', label: '현재 기온', value: `${metrics.tmp}°C`, desc: 'TMP category', icon: 'temp' },    
-  { key: 'pop', label: '강수 확률', value: `${metrics.pop}%`, desc: 'POP category', icon: 'rain' },     
-  { key: 'reh', label: '습도', value: `${metrics.reh}%`, desc: 'REH category', icon: 'water' },  
-  { key: 'wsd', label: '풍속', value: `${metrics.wsd}m/s`, desc: 'WSD category', icon: 'wind' },   
-];
+  const cardData = [
+    {
+      key: 'tmp',
+      label: '현재 기온',
+      value: `${metrics.tmp}°C`,
+      desc: 'TMP category',
+      icon: <FiThermometer />,
+      color: '#67e8f9',
+    },
+    {
+      key: 'pop',
+      label: '강수 확률',
+      value: `${metrics.pop}%`,
+      desc: 'POP category',
+      icon: <FiCloudRain />,
+      color: '#c084fc',
+    },
+    {
+      key: 'reh',
+      label: '습도',
+      value: `${metrics.reh}%`,
+      desc: 'REH category',
+      icon: <FiDroplet />,
+      color: '#60a5fa',
+    },
+    {
+      key: 'wsd',
+      label: '풍속',
+      value: `${metrics.wsd}m/s`,
+      desc: 'WSD category',
+      icon: <FiWind />,
+      color: '#34d399',
+    },
+  ];
 
   return (
     <div className={styles['present-weather-grid']}>
       {cardData.map((card) => (
-        <Box variant="default" key={card.key} className={styles['metric-card']}>
-          <div className={styles['card-icon']}>
-            <Icons name={card.icon} size="sm" color="gray-light" />
+        <div key={card.key} className={styles['metric-card']}>
+          <div className={styles['card-icon']} style={{ color: card.color }}>
+            {card.icon}
           </div>
           <div className={styles['card-content']}>
-            <Text variant="caption" color="gray-light">{card.label}</Text>
-            <Text variant="card-value" color="white" className={styles['metric-value']}>
+            <span className={styles['label']}>{card.label}</span>
+            <span className={styles['value']}>
               {isLoading ? '--' : card.value}
-            </Text>
-            <Text variant="caption" color="gray-dark">{card.desc}</Text>
+            </span>
+            <span className={styles['desc']}>{card.desc}</span>
           </div>
-        </Box>
+        </div>
       ))}
     </div>
   );

@@ -6,24 +6,55 @@
   gap: 1.6rem;
 
   .metric-card {
+    background: linear-gradient(135deg, rgba(22, 27, 46, 0.7) 0%, rgba(14, 17, 30, 0.8) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 2rem;
+    padding: 2.2rem;
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
-    padding: 2rem;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
   }
+
+  .card-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1.2rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2rem;
+  }
+
   .card-content {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-  }
-  .metric-value {
-    font-size: 2.2rem;
-    font-weight: var.$fw-600;
-  }
-}
 
-@keyframes pulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(78, 242, 190, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(78, 242, 190, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(78, 242, 190, 0); }
+    .label {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.55);
+      font-weight: 500;
+    }
+
+    .value {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.05rem;
+    }
+
+    .desc {
+      font-size: 1.15rem;
+      color: rgba(255, 255, 255, 0.35);
+      font-weight: 400;
+    }
+  }
 }

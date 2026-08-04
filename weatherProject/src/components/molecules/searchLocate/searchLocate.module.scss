@@ -1,27 +1,49 @@
-@use '../../../styles/base/variable' as var;
-// 1. SearchLocate 스타일
 .search-box {
-  padding: 1.2rem 2.4rem;
-  margin-bottom: 1.6rem;
-  
+  background: linear-gradient(135deg, rgba(22, 27, 46, 0.7) 0%, rgba(14, 17, 30, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.8rem;
+  padding: 1.2rem 2rem;
+
   .search-form {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1.2rem;
   }
+
   .search-input {
-    width: 100%;
+    flex: 1;
     background: transparent;
     border: none;
-    color: var.$white;
-    font-size: var.$p2;
+    color: #ffffff;
+    font-size: 1.4rem;
     outline: none;
-    &::placeholder { color: var.$color-gray-dark; }
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
   }
+
   .search-button {
-    background: transparent;
-    border: none;
+    background: rgba(103, 232, 249, 0.1);
+    border: 1px solid rgba(103, 232, 249, 0.2);
+    color: #67e8f9;
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(103, 232, 249, 0.2);
+      transform: scale(1.05);
+    }
+
+    .search-icon {
+      font-size: 1.6rem;
+    }
   }
 }

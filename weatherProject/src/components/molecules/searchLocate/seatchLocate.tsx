@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { contentState } from '../../../recoil/locate'; // 경로에 맞게 수정
-import getRegionGridCoordinates  from '../../../../utils/api/kakaoMap'; // 이전에 만든 카카오 주소 검색 함수
-import Box from "../../atoms/box/box";
-import Icons from "../../atoms/icons/icons";
+import { contentState } from '../../../recoil/locate';
+import getRegionGridCoordinates from '../../../../utils/api/kakaoMap';
+import { FiSearch } from 'react-icons/fi';
 import styles from './searchLocate.module.scss';
 
 export default function SearchLocate() {
@@ -14,11 +13,9 @@ export default function SearchLocate() {
     e.preventDefault();
     if (!keyword.trim()) return;
 
-    // 카카오 API 검색 및 격자 변환 실행
     const result = await getRegionGridCoordinates(keyword);
-    
+
     if (result) {
-      // Recoil 상태 전역 업데이트 -> 지도와 날씨 카드가 자동으로 반응함
       setLocation({
         nx: result.nx,
         ny: result.ny,
@@ -31,7 +28,7 @@ export default function SearchLocate() {
   };
 
   return (
-    <Box variant="default" className={styles['search-box']}>
+    <div className={styles['search-box']}>
       <form onSubmit={handleSearch} className={styles['search-form']}>
         <input
           type="text"
@@ -40,10 +37,10 @@ export default function SearchLocate() {
           onChange={(e) => setKeyword(e.target.value)}
           className={styles['search-input']}
         />
-        <button type="submit" className={styles['search-button']}>
-          <Icons name="location" size="sm" color="mint" />
+        <button type="submit" className={styles['search-button']} title="검색">
+          <FiSearch className={styles['search-icon']} />
         </button>
       </form>
-    </Box>
+    </div>
   );
 }

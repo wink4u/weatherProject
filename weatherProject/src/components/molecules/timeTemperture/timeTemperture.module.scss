@@ -1,43 +1,82 @@
-// src/components/molecules/TimeTemperature/timeTemperature.module.scss
 .chart-card {
   flex: 1.25;
-  background: linear-gradient(135deg, rgba(30, 34, 54, 0.6) 0%, rgba(20, 22, 37, 0.7) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 2.4rem;
+  background: linear-gradient(135deg, rgba(22, 27, 46, 0.7) 0%, rgba(14, 17, 30, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 2.8rem;
   padding: 3.2rem;
   box-shadow: 0 1.5rem 3.5rem rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
 
   .card-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 2.4rem;
+    margin-bottom: 2rem;
 
     .sub-title {
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.45);
       font-size: 1.3rem;
+      font-weight: 500;
     }
+
     .main-title {
       color: #ffffff;
-      font-size: 2.2rem;
-      font-weight: 700;
+      font-size: 2.4rem;
+      font-weight: 800;
       margin: 0.4rem 0 0 0;
+      letter-spacing: -0.04rem;
     }
-    .icon-clock {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 2rem;
+
+    .icon-button {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 1.8rem;
+      width: 3.6rem;
+      height: 3.6rem;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
   .custom-legend {
     display: flex;
-    gap: 1.6rem;
+    gap: 2rem;
     font-size: 1.4rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 2.4rem;
 
-    .legend-temp { color: #67e8f9; }
-    .legend-pop { color: #a855f7; }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .legend-dot {
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 50%;
+
+      &.dot-temp {
+        background-color: #67e8f9;
+        box-shadow: 0 0 0.8rem #67e8f9;
+      }
+
+      &.dot-pop {
+        background-color: #c084fc;
+        box-shadow: 0 0 0.8rem #c084fc;
+      }
+    }
+
+    .legend-text-temp {
+      color: #67e8f9;
+    }
+
+    .legend-text-pop {
+      color: #c084fc;
+    }
   }
 
   .chart-wrapper {

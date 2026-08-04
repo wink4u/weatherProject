@@ -1,4 +1,3 @@
-// src/components/molecules/TimeWindy/TimeWindy.tsx
 import { useRef, useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -9,11 +8,36 @@ import {
   Title,
   Tooltip,
   Legend,
-  type ChartData
+  type ChartData,
+  type Plugin,
 } from 'chart.js';
+import { FiWind } from 'react-icons/fi';
 import styles from './timeWindy.module.scss';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+// Custom plugin to render value labels above bars matching mockup.png
+const valueLabelsPlugin: Plugin<'bar'> = {
+  id: 'valueLabels',
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart;
+    chart.data.datasets.forEach((dataset, i) => {
+      const meta = chart.getDatasetMeta(i);
+      meta.data.forEach((bar, index) => {
+        const value = dataset.data[index];
+        if (value !== null && value !== undefined) {
+          ctx.save();
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 12px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'bottom';
+          ctx.fillText(String(value), bar.x, bar.y - 6);
+          ctx.restore();
+        }
+      });
+    });
+  },
+};
 
 interface TimeWindyProps {
   labels: string[];
@@ -21,30 +45,30 @@ interface TimeWindyProps {
 }
 
 export default function TimeWindy({ labels, wsdData }: TimeWindyProps) {
-  const chartRef = useRef<ChartJS<"bar"> | null>(null);
+  const chartRef = useRef<ChartJS<'bar'> | null>(null);
   const [gradientBg, setGradientBg] = useState<CanvasGradient | string>('#34d399');
 
-  // 💡 컴포넌트 마운트 후 혹은 데이터가 들어왔을 때 딱 한 번만 캔버스 그라데이션 객체를 생성합니다.
   useEffect(() => {
     const chart = chartRef.current;
     if (chart) {
       const ctx = chart.ctx;
       const gradient = ctx.createLinearGradient(0, 0, 0, 240);
-      gradient.addColorStop(0, '#34d399'); // 상단 네온 민트
-      gradient.addColorStop(1, 'rgba(52, 211, 153, 0.05)'); // 하단 페이드 아웃
+      gradient.addColorStop(0, '#67e8f9'); // Mint/Cyan top glow
+      gradient.addColorStop(0.5, '#34d399'); // Neon mint
+      gradient.addColorStop(1, 'rgba(52, 211, 153, 0.15)'); // Bottom fade
       setGradientBg(gradient);
     }
-  }, [wsdData]); // 데이터가 들어와서 실제로 Bar가 렌더링된 직후 그라데이션을 입힙니다.
+  }, [wsdData]);
 
-  // 🎯 로컬 state로 따로 관리하지 않고, 넘겨받은 Props 그대로 차트 데이터 규격을 실시간 매핑합니다.
-  const data: ChartData<"bar"> = {
+  const data: ChartData<'bar'> = {
     labels,
     datasets: [
       {
-        data: wsdData.map(val => Number(val)),
+        data: wsdData.map((val) => Number(val)),
         backgroundColor: gradientBg,
-        borderRadius: 16,
+        borderRadius: 14,
         borderSkipped: false,
+        barPercentage: 0.55,
       },
     ],
   };
@@ -54,18 +78,26 @@ export default function TimeWindy({ labels, wsdData }: TimeWindyProps) {
     maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
-      tooltip: { backgroundColor: 'rgba(20, 22, 37, 0.9)' }
+      tooltip: {
+        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+        titleColor: '#ffffff',
+        bodyColor: '#94a3b8',
+        borderColor: 'rgba(255, 255, 255, 0.1)',
+        borderWidth: 1,
+        padding: 10,
+        cornerRadius: 8,
+      },
     },
     scales: {
       x: {
         grid: { display: false },
-        ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { size: 12 } }
+        ticks: { color: 'rgba(255, 255, 255, 0.5)', font: { size: 12 } },
       },
       y: {
         grid: { display: false },
-        ticks: { display: false }
-      }
-    }
+        ticks: { display: false },
+      },
+    },
   };
 
   return (
@@ -75,12 +107,18 @@ export default function TimeWindy({ labels, wsdData }: TimeWindyProps) {
           <span className={styles['sub-title']}>바람 분석</span>
           <h3 className={styles['main-title']}>시간대별 풍속</h3>
         </div>
-        <span className={styles['icon-windy']}>💨</span>
+        <div className={styles['icon-button']}>
+          <FiWind />
+        </div>
       </div>
 
       <div className={styles['chart-wrapper']}>
-        {/* 💡 조건부 렌더링으로 감싸지 않고 항상 컴포넌트를 유지하여 ref가 유실되지 않도록 보장합니다. */}
-        <Bar ref={chartRef} data={data} options={options} />
+        <Bar
+          ref={chartRef}
+          data={data}
+          options={options}
+          plugins={[valueLabelsPlugin]}
+        />
       </div>
     </div>
   );

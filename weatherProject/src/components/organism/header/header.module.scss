@@ -1,0 +1,79 @@
+.header-container {
+  width: 100%;
+  max-width: 136rem;
+  margin: 0 auto;
+  padding: 2rem 2.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    .brand-icon {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #67e8f9;
+      font-size: 2rem;
+      box-shadow: 0 0 1.5rem rgba(103, 232, 249, 0.15);
+    }
+
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+
+      .brand-sub {
+        font-size: 1.2rem;
+        color: #94a3b8;
+        font-weight: 500;
+        letter-spacing: -0.02rem;
+      }
+
+      .brand-main {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: -0.04rem;
+      }
+    }
+  }
+
+  .refresh-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    border-radius: 10rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0.4rem 1.5rem rgba(255, 255, 255, 0.15);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0.6rem 2rem rgba(255, 255, 255, 0.25);
+      background: #f8fafc;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    .refresh-icon {
+      font-size: 1.4rem;
+    }
+  }
+}

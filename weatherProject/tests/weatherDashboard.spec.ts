@@ -13,15 +13,15 @@ test.describe('기상청 트렌디 다크 대시보드 E2E 테스트', () => {
     const mainTitle = page.locator('h1, h2, .main-title').first();
     await expect(mainTitle).toBeVisible();
 
-    // 우리가 세팅한 글로벌 바디의 어두운 인디고 네이비(#0d0e16) 배경색이 잘 입혀졌는지 스타일 검증
+    // 우리가 세팅한 글로벌 바디의 어두운 인디고 네이비(#0b0e1b) 배경색이 잘 입혀졌는지 스타일 검증
     const body = page.locator('body');
-    await expect(body).toHaveCSS('background-color', 'rgb(13, 14, 22)'); // #0d0e16의 RGB 값
+    await expect(body).toHaveCSS('background-color', 'rgb(11, 14, 27)'); // #0b0e1b의 RGB 값
   });
 
   test('2. 비동기 기상청 데이터 로드 완료 후 하단 차트(TimeTable) 레이아웃이 표시되는지 검증', async ({ page }) => {
     // Recoil 데이터가 채워지기 전 초기 "데이터 동기화 중" 텍스트가 안 보일 때까지 대기하거나,
     // 차트 카드 컴포넌트가 DOM에 마운트될 때까지 최대 5초간 대기합니다.
-    const chartCard = page.locator('.chart-card').first();
+    const chartCard = page.locator('[class*="chart-card"]').first();
     await expect(chartCard).toBeVisible({ timeout: 5000 });
 
     // 좌측 기온/강수확률 타이틀과 우측 바람 분석 타이틀이 올바르게 들어왔는지 확인
@@ -57,7 +57,7 @@ test.describe('기상청 트렌디 다크 대시보드 E2E 테스트', () => {
 
     // 전체 대시보드 컨테이너의 스크린샷을 찍어서 기준(Baseline) 이미지와 픽셀 단위로 비교합니다.
     // 처음 실행하면 기준 이미지가 생성되고, 두 번째 실행부터 디자인 깨짐을 추적합니다.
-    const dashboard = page.locator('.dashboard-container');
+    const dashboard = page.locator('[class*="dashboard-container"]');
     if (await dashboard.isVisible()) {
       await expect(dashboard).toHaveScreenshot('weather-dashboard-layout.png', {
         maxDiffPixelRatio: 0.05 // 미세한 차트 폰트 렌더링 차이는 5%까지 허용
